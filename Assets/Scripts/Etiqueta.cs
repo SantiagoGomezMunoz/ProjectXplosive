@@ -1,0 +1,1 @@
+public enum Etiqueta { Fuego, Frio, Sueno, Hambre, Eco, Espejo }
