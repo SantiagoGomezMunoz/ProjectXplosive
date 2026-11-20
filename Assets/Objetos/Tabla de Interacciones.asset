@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09f6f0dd300e046428712290577b6926, type: 3}
+  m_Name: Tabla de Interacciones
+  m_EditorClassIdentifier: Assembly-CSharp::TablaInteracciones
+  reglas:
+  - etiquetaA: 0
+    etiquetaB: 1
+    modificadorValor: -0.2
+    deltaPeligro: -1
+    mensaje: El hielo y el fuego se cancelan. La tienda respira aliviada.
+  - etiquetaA: 0
+    etiquetaB: 3
+    modificadorValor: 0.4
+    deltaPeligro: 2
+    mensaje: La cuchara arde de hambre... literalmente.
+  - etiquetaA: 1
+    etiquetaB: 3
+    modificadorValor: 0.15
+    deltaPeligro: 0
+    mensaje: La cuchara se congela con la boca abierta.

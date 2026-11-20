@@ -392,6 +392,7 @@ MonoBehaviour:
   tamanoGrid: {x: 12, y: 8}
   origen: {x: -6, y: -4}
   spriteCelda: {fileID: 7482667652216324306, guid: 88d2f15a6bc463c40be39b6454ee3b74, type: 3}
+  tabla: {fileID: 11400000, guid: d8a7a64b3ec6b1e439bc1c3e70377e36, type: 2}
 --- !u!4 &1216763244
 Transform:
   m_ObjectHideFlags: 0

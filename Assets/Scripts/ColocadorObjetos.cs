@@ -8,6 +8,7 @@ public class ColocadorObjetos : MonoBehaviour
     [SerializeField] private Vector2Int tamanoGrid = new(12, 8);
     [SerializeField] private Vector2 origen = Vector2.zero;
     [SerializeField] private Sprite spriteCelda;
+    [SerializeField] private TablaInteracciones tabla;
 
     private readonly System.Collections.Generic.List<SpriteRenderer> marcasAura = new();
     private Transform contenedor;
@@ -63,12 +64,14 @@ public class ColocadorObjetos : MonoBehaviour
                 go.transform.position = CeldaACentro(celda);
                 go.transform.SetParent(contenedor);
                 colocado.vista = go;
+                Recalcular();
             }
         }
 
         if (mouse.rightButton.wasPressedThisFrame && grid.Quitar(celda, out ObjetoColocado quitado))
         {
             Destroy(quitado.vista);
+            Recalcular();
         }
     }
 
@@ -117,5 +120,17 @@ public class ColocadorObjetos : MonoBehaviour
         marca.sortingOrder = 50;
         marca.transform.SetParent(transform);
         return marca;
+    }
+
+    private void Recalcular()
+    {
+        if (tabla == null) return;
+        ResultadoTienda r = ResolvedorTienda.Resolver(grid, tabla);
+
+        Debug.Log($"--- Peligro total: {r.peligroTotal} | Interacciones: {r.efectos.Count} ---");
+        foreach (EfectoAplicado e in r.efectos)
+            Debug.Log($"{e.a.data.nombre} + {e.b.data.nombre}: {e.regla.mensaje}");
+        foreach (ObjetoColocado o in grid.Todos)
+            Debug.Log($"{o.data.nombre} en {o.celda}: precio final {r.PrecioFinal(o)}");
     }
 }

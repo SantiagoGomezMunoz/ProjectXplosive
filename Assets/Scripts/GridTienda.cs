@@ -13,6 +13,7 @@ public class GridTienda
     public readonly int ancho;
     public readonly int alto;
     private readonly Dictionary<Vector2Int, ObjetoColocado> celdas = new();
+    public IEnumerable<ObjetoColocado> Todos => celdas.Values;
 
     public GridTienda(int ancho, int alto)
     {
