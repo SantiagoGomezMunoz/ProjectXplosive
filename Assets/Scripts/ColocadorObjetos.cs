@@ -7,7 +7,10 @@ public class ColocadorObjetos : MonoBehaviour
     [SerializeField] private ObjetoMalditoData[] catalogo;
     [SerializeField] private Vector2Int tamanoGrid = new(12, 8);
     [SerializeField] private Vector2 origen = Vector2.zero;
+    [SerializeField] private Sprite spriteCelda;
 
+    private readonly System.Collections.Generic.List<SpriteRenderer> marcasAura = new();
+    private Transform contenedor;
     private GridTienda grid;
     private SpriteRenderer fantasma;
     private int indiceActual;
@@ -19,6 +22,7 @@ public class ColocadorObjetos : MonoBehaviour
 
         fantasma = new GameObject("Fantasma").AddComponent<SpriteRenderer>();
         fantasma.sortingOrder = 100;
+        contenedor = new GameObject("Objetos colocados").transform;
         ActualizarFantasma();
     }
 
@@ -43,6 +47,7 @@ public class ColocadorObjetos : MonoBehaviour
         Vector2Int celda = Vector2Int.FloorToInt((Vector2)mundo - origen);
 
         bool valida = grid.EstaLibre(celda);
+        MostrarAura(catalogo[indiceActual], celda);
         fantasma.transform.position = CeldaACentro(celda);
         fantasma.color = valida
             ? new Color(0.6f, 1f, 0.6f, 0.7f)
@@ -56,6 +61,7 @@ public class ColocadorObjetos : MonoBehaviour
                 var go = new GameObject(data.nombre);
                 go.AddComponent<SpriteRenderer>().sprite = data.sprite;
                 go.transform.position = CeldaACentro(celda);
+                go.transform.SetParent(contenedor);
                 colocado.vista = go;
             }
         }
@@ -79,5 +85,37 @@ public class ColocadorObjetos : MonoBehaviour
             Gizmos.DrawLine(new Vector3(origen.x + x, origen.y), new Vector3(origen.x + x, origen.y + tamanoGrid.y));
         for (int y = 0; y <= tamanoGrid.y; y++)
             Gizmos.DrawLine(new Vector3(origen.x, origen.y + y), new Vector3(origen.x + tamanoGrid.x, origen.y + y));
+    }
+
+    private void MostrarAura(ObjetoMalditoData data, Vector2Int celda)
+    {
+        int n = data.aura.Count;
+        while (marcasAura.Count < n) marcasAura.Add(CrearMarca());
+
+        for (int i = 0; i < marcasAura.Count; i++)
+        {
+            SpriteRenderer marca = marcasAura[i];
+            if (i >= n) { marca.gameObject.SetActive(false); continue; }
+
+            Vector2Int c = celda + data.aura[i];
+            bool dentro = grid.EstaDentro(c);
+            marca.gameObject.SetActive(dentro);
+            if (!dentro) continue;
+
+            marca.transform.position = CeldaACentro(c);
+            bool hayObjeto = grid.TryObtener(c, out _);
+            marca.color = hayObjeto
+                ? new Color(1f, 0.85f, 0.2f, 0.45f)   // amarillo: aquí habrá interacción
+                : new Color(1f, 1f, 1f, 0.15f);       // blanco tenue: solo alcance
+        }
+    }
+
+    private SpriteRenderer CrearMarca()
+    {
+        var marca = new GameObject("MarcaAura").AddComponent<SpriteRenderer>();
+        marca.sprite = spriteCelda;
+        marca.sortingOrder = 50;
+        marca.transform.SetParent(transform);
+        return marca;
     }
 }
