@@ -66,7 +66,11 @@ public class GestorDia : MonoBehaviour
         }
 
         TiempoRestante -= Time.deltaTime;
-        bool saltar = teclado != null && teclado.nKey.wasPressedThisFrame; // solo para pruebas
+        bool saltar = false;
+        #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        saltar = teclado != null && teclado.nKey.wasPressedThisFrame; // solo para pruebas
+        #endif
+        
         if (TiempoRestante <= 0f || saltar) IniciarFase(Siguiente(FaseActual));
     }
 

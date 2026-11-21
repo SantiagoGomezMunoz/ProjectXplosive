@@ -24,12 +24,14 @@ public class ColocadorObjetos : MonoBehaviour
     private int ultimoIndice = -1;
     private bool sucio = true;
     private GUIStyle estiloPanel;
+    private GameObject lineasCuadricula;
 
     private void Awake()
     {
         grid = new GridTienda(tamanoGrid.x, tamanoGrid.y);
 
         grid.puerta = puerta;
+        CrearCuadricula();
 
         var marcaPuerta = new GameObject("Puerta").AddComponent<SpriteRenderer>();
         marcaPuerta.sprite = spriteCelda;
@@ -53,6 +55,7 @@ public class ColocadorObjetos : MonoBehaviour
 
         bool puedeColocar = gestor == null || gestor.FaseActual == FaseDia.Manana;
         fantasma.gameObject.SetActive(puedeColocar);
+        lineasCuadricula.SetActive(puedeColocar);
 
         if (!puedeColocar)
             {
@@ -234,5 +237,31 @@ public class ColocadorObjetos : MonoBehaviour
         if (objeto.vista != null) objeto.vista.transform.position = CeldaACentro(nuevaCelda);
         Recalcular();
         return true;
+    }
+
+    private void CrearCuadricula()
+    {
+        lineasCuadricula = new GameObject("Cuadricula");
+        var color = new Color(1f, 1f, 1f, 0.18f);
+        float grosor = 1f / 32f; // un píxel
+
+        for (int x = 0; x <= tamanoGrid.x; x++)
+            CrearLinea(new Vector3(origen.x + x, origen.y + tamanoGrid.y / 2f, 0f),
+                        new Vector3(grosor, tamanoGrid.y + grosor, 1f), color);
+
+        for (int y = 0; y <= tamanoGrid.y; y++)
+            CrearLinea(new Vector3(origen.x + tamanoGrid.x / 2f, origen.y + y, 0f),
+                    new Vector3(tamanoGrid.x + grosor, grosor, 1f), color);
+    }
+
+    private void CrearLinea(Vector3 posicion, Vector3 escala, Color color)
+    {
+        var sr = new GameObject("Linea").AddComponent<SpriteRenderer>();
+        sr.sprite = spriteCelda;
+        sr.color = color;
+        sr.sortingOrder = -4;
+        sr.transform.SetParent(lineasCuadricula.transform);
+        sr.transform.position = posicion;
+        sr.transform.localScale = escala;
     }
 }

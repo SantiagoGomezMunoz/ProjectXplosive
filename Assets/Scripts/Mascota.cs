@@ -20,6 +20,8 @@ public class Mascota : MonoBehaviour
     [SerializeField] private int peligroAsustada = 15;
     [SerializeField] private int radioPaseo = 3;
     [SerializeField] private bool spriteMiraIzquierda = true;
+    [SerializeField] private float escalaAlerta = 1.12f;
+    [SerializeField] private float escalaAsustada = 1.2f;
 
     private SpriteRenderer render;
     private Humor humor = Humor.Tranquila;
@@ -123,7 +125,7 @@ public class Mascota : MonoBehaviour
         };
         if (sprite != null) render.sprite = sprite;
 
-        float escala = humor == Humor.Asustada ? 1.2f : humor == Humor.Alerta ? 1.12f : 1f;
+        float escala = humor == Humor.Asustada ? escalaAsustada : humor == Humor.Alerta ? escalaAlerta : 1f;
         transform.localScale = new Vector3(escala, escala, 1f);
 
         Vector3 desplazamiento = Vector3.zero;
