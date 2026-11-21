@@ -11,20 +11,47 @@ public class EstadoTienda : MonoBehaviour
     public int Dinero { get; private set; }
     public int Reputacion { get; private set; }
 
+    // Contadores del día (para el resumen del cierre)
+    public int VentasDia { get; private set; }
+    public int IngresosDia { get; private set; }
+    public int SustosDia { get; private set; }
+    public int CalmadosNoche { get; private set; }
+    public int DescontroladosNoche { get; private set; }
+    public int ReputacionInicioDia { get; private set; }
+
     private readonly Queue<string> mensajes = new();
     private GUIStyle estiloPanel;
     private GUIStyle estiloMensajes;
+
+    public void NuevoDia()
+    {
+        VentasDia = 0;
+        IngresosDia = 0;
+        SustosDia = 0;
+        CalmadosNoche = 0;
+        DescontroladosNoche = 0;
+        ReputacionInicioDia = Reputacion;
+    }
+
+    public void RegistrarNoche(int calmados, int descontrolados)
+    {
+        CalmadosNoche = calmados;
+        DescontroladosNoche = descontrolados;
+    }
 
     public void RegistrarVenta(int monto, string cliente, string objeto)
     {
         Dinero += monto;
         Reputacion += reputacionPorVenta;
+        VentasDia++;
+        IngresosDia += monto;
         Mensaje($"{cliente} compró {objeto} por {monto}.");
     }
 
     public void RegistrarSusto(string cliente)
     {
         Reputacion += reputacionPorSusto;
+        SustosDia++;
         Mensaje($"¡{cliente} se asustó y se fue! Reputación {reputacionPorSusto}.");
     }
 

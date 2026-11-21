@@ -6,6 +6,7 @@ public class PerfilCliente : ScriptableObject
     public string nombre;
     public Sprite sprite;
     public Color tinte = Color.white;
+    public bool spriteMiraIzquierda = false;
     public float velocidad = 2f;
 
     [Header("Se usan desde el día 11")]

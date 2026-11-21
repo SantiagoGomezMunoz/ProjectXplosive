@@ -31,6 +31,8 @@ public class Cliente : MonoBehaviour
 
         celdaActual = colocador.Grid.puerta;
         transform.position = colocador.CeldaACentro(celdaActual);
+        var voltear = gameObject.AddComponent<VoltearSegunMovimiento>();
+        voltear.Configurar(perfil.spriteMiraIzquierda);
         ElegirObjetivo();
     }
 

@@ -212,11 +212,13 @@ public class GestorNoche : MonoBehaviour
         foreach (Inquieto i in inquietos) Restaurar(i.objeto);
         inquietos.Clear();
 
+        if (tienda != null) tienda.RegistrarNoche(calmados, sinCalmar);
+
         Mensaje($"La noche terminó: {calmados} calmados, {sinCalmar} sin calmar.");
         if (tienda != null && sinCalmar >= sinCalmarParaPenalizar)
             tienda.CambiarReputacion(-1, "Demasiados objetos se descontrolaron.");
     }
-
+    
     private void Mensaje(string texto)
     {
         if (tienda != null) tienda.Mensaje(texto);
