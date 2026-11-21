@@ -227,4 +227,12 @@ public class ColocadorObjetos : MonoBehaviour
             Destroy(quitado.vista);
         Recalcular();
     }
+
+    public bool Mover(ObjetoColocado objeto, Vector2Int nuevaCelda)
+    {
+        if (!grid.Mover(objeto, nuevaCelda)) return false;
+        if (objeto.vista != null) objeto.vista.transform.position = CeldaACentro(nuevaCelda);
+        Recalcular();
+        return true;
+    }
 }

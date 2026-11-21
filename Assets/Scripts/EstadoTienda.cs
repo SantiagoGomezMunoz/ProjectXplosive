@@ -28,6 +28,12 @@ public class EstadoTienda : MonoBehaviour
         Mensaje($"¡{cliente} se asustó y se fue! Reputación {reputacionPorSusto}.");
     }
 
+    public void CambiarReputacion(int delta, string motivo)
+    {
+        Reputacion += delta;
+        Mensaje($"{motivo} Reputación {delta}.");
+    }
+
     public void Mensaje(string texto)
     {
         Debug.Log(texto);

@@ -47,5 +47,14 @@ public class GridTienda
         celdas.Remove(c);
         return true;
     }
+
+    public bool Mover(ObjetoColocado objeto, Vector2Int nueva)
+    {
+        if (!EstaLibre(nueva)) return false;
+        celdas.Remove(objeto.celda);
+        objeto.celda = nueva;
+        celdas[nueva] = objeto;
+        return true;
+    }
     
 }

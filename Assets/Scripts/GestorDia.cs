@@ -23,9 +23,17 @@ public class GestorDia : MonoBehaviour
 
     private Color colorObjetivo = Color.white;
     private float intensidadObjetivo = 1f;
+    private float intensidadActual = 1f;
+    private float parpadeoRestante;
     private GUIStyle estilo;
 
-    private void Start() => IniciarFase(FaseDia.Manana);
+    private void Start()
+    {
+        if (luzGlobal != null) intensidadActual = luzGlobal.intensity;
+        IniciarFase(FaseDia.Manana);
+    }
+
+    public void Parpadear(float duracion = 0.35f) => parpadeoRestante = duracion;
 
     private void Update()
     {
@@ -33,7 +41,16 @@ public class GestorDia : MonoBehaviour
         {
             float t = velocidadTransicion * Time.deltaTime;
             luzGlobal.color = Color.Lerp(luzGlobal.color, colorObjetivo, t);
-            luzGlobal.intensity = Mathf.Lerp(luzGlobal.intensity, intensidadObjetivo, t);
+            intensidadActual = Mathf.Lerp(intensidadActual, intensidadObjetivo, t);
+
+            float factor = 1f;
+            if (parpadeoRestante > 0f)
+            {
+                parpadeoRestante -= Time.deltaTime;
+                if (parpadeoRestante > 0f)
+                    factor = (Mathf.FloorToInt(parpadeoRestante * 14f) % 2 == 0) ? 0.25f : 1f;
+            }
+            luzGlobal.intensity = intensidadActual * factor;
         }
 
         Keyboard teclado = Keyboard.current;
@@ -60,8 +77,8 @@ public class GestorDia : MonoBehaviour
 
         switch (fase)
         {
-            case FaseDia.Manana: colorObjetivo = new Color(1f, 0.95f, 0.8f);  intensidadObjetivo = 1f;   break;
-            case FaseDia.Tarde:  colorObjetivo = new Color(1f, 0.7f, 0.45f);  intensidadObjetivo = 0.9f; break;
+            case FaseDia.Manana: colorObjetivo = new Color(1f, 0.95f, 0.8f);   intensidadObjetivo = 1f;   break;
+            case FaseDia.Tarde:  colorObjetivo = new Color(1f, 0.7f, 0.45f);   intensidadObjetivo = 0.9f; break;
             case FaseDia.Noche:  colorObjetivo = new Color(0.25f, 0.3f, 0.6f); intensidadObjetivo = 0.6f; break;
             case FaseDia.Cierre: colorObjetivo = new Color(0.6f, 0.6f, 0.75f); intensidadObjetivo = 0.8f; break;
         }

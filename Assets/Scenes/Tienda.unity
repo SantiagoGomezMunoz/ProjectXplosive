@@ -119,6 +119,61 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &291723525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 291723527}
+  - component: {fileID: 291723526}
+  m_Layer: 0
+  m_Name: GestorNoche
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &291723526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291723525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 635f26404e87a1045b32a2c00eef629f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GestorNoche
+  gestorDia: {fileID: 853912725}
+  colocador: {fileID: 1216763243}
+  tienda: {fileID: 2018878515}
+  jugador: {fileID: 1852953308}
+  intervaloPeligroBajo: 12
+  intervaloPeligroAlto: 4
+  peligroMaximoReferencia: 25
+  tiempoAviso: 4
+  maxSimultaneos: 2
+  radioCalmar: 1.6
+  sinCalmarParaPenalizar: 3
+--- !u!4 &291723527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291723525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.08038, y: -2.46151, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,5 +1966,6 @@ SceneRoots:
   - {fileID: 1216763244}
   - {fileID: 1362756339}
   - {fileID: 853912726}
+  - {fileID: 291723527}
   - {fileID: 926270936}
   - {fileID: 2018878516}
