@@ -14,6 +14,7 @@ public class GridTienda
     public readonly int alto;
     private readonly Dictionary<Vector2Int, ObjetoColocado> celdas = new();
     public IEnumerable<ObjetoColocado> Todos => celdas.Values;
+    public Vector2Int puerta = Vector2Int.zero;
 
     public GridTienda(int ancho, int alto)
     {
@@ -24,7 +25,9 @@ public class GridTienda
     public bool EstaDentro(Vector2Int c) =>
         c.x >= 0 && c.y >= 0 && c.x < ancho && c.y < alto;
 
-    public bool EstaLibre(Vector2Int c) => EstaDentro(c) && !celdas.ContainsKey(c);
+    public bool EsTransitable(Vector2Int c) => EstaDentro(c) && !celdas.ContainsKey(c);
+    public bool EstaLibre(Vector2Int c) => EsTransitable(c) && c != puerta;
+    
 
     public bool TryObtener(Vector2Int c, out ObjetoColocado objeto) =>
         celdas.TryGetValue(c, out objeto);
@@ -44,4 +47,5 @@ public class GridTienda
         celdas.Remove(c);
         return true;
     }
+    
 }

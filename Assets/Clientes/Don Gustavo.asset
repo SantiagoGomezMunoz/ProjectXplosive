@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85f232aa60788ff48997325693dec37c, type: 3}
+  m_Name: Don Gustavo
+  m_EditorClassIdentifier: Assembly-CSharp::PerfilCliente
+  nombre: Don Gustavo
+  sprite: {fileID: 4620843761898129989, guid: 5e2e65e61975cc0428271f1ca1c9fb1f, type: 3}
+  tinte: {r: 1, g: 1, b: 1, a: 1}
+  velocidad: 2.2
+  multiplicadorPrecio: 0.8
+  peligroMinimoObjeto: 0
+  soloSinInteracciones: 1
+  umbralMiedo: 0

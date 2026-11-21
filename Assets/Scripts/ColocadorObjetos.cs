@@ -10,10 +10,13 @@ public class ColocadorObjetos : MonoBehaviour
     [SerializeField] private Sprite spriteCelda;
     [SerializeField] private TablaInteracciones tabla;
     [SerializeField] private GestorDia gestor;
+    [SerializeField] private Vector2Int puerta = Vector2Int.zero;
 
     private readonly System.Collections.Generic.List<SpriteRenderer> marcasAura = new();
     private Transform contenedor;
-    private GridTienda grid;
+    private GridTienda grid;  
+    public GridTienda Grid => grid;
+    public int PeligroActual { get; private set; }
     private SpriteRenderer fantasma;
     private int indiceActual;
     private string textoPrevia = "";
@@ -25,6 +28,15 @@ public class ColocadorObjetos : MonoBehaviour
     private void Awake()
     {
         grid = new GridTienda(tamanoGrid.x, tamanoGrid.y);
+
+        grid.puerta = puerta;
+
+        var marcaPuerta = new GameObject("Puerta").AddComponent<SpriteRenderer>();
+        marcaPuerta.sprite = spriteCelda;
+        marcaPuerta.color = new Color(0.55f, 0.35f, 0.15f, 0.8f);
+        marcaPuerta.sortingOrder = -5;
+        marcaPuerta.transform.position = CeldaACentro(puerta);
+
         if (camara == null) camara = Camera.main;
 
         fantasma = new GameObject("Fantasma").AddComponent<SpriteRenderer>();
@@ -41,7 +53,7 @@ public class ColocadorObjetos : MonoBehaviour
 
         bool puedeColocar = gestor == null || gestor.FaseActual == FaseDia.Manana;
         fantasma.gameObject.SetActive(puedeColocar);
-        
+
         if (!puedeColocar)
             {
             OcultarAura();
@@ -105,7 +117,7 @@ public class ColocadorObjetos : MonoBehaviour
     private void ActualizarFantasma() =>
         fantasma.sprite = catalogo.Length > 0 ? catalogo[indiceActual].sprite : null;
 
-    private Vector3 CeldaACentro(Vector2Int c) =>
+    public Vector3 CeldaACentro(Vector2Int c) =>
         new Vector3(origen.x + c.x + 0.5f, origen.y + c.y + 0.5f, 0f);
 
     private void OnDrawGizmos()
@@ -154,6 +166,7 @@ public class ColocadorObjetos : MonoBehaviour
         sucio = true;
         if (tabla == null) return;
         ResultadoTienda r = ResolvedorTienda.Resolver(grid, tabla);
+        PeligroActual = r.peligroTotal;
 
         Debug.Log($"--- Peligro total: {r.peligroTotal} | Interacciones: {r.efectos.Count} ---");
         foreach (EfectoAplicado e in r.efectos)
@@ -204,5 +217,14 @@ public class ColocadorObjetos : MonoBehaviour
     private void OcultarAura()
     {
         foreach (SpriteRenderer m in marcasAura) m.gameObject.SetActive(false);
+    }
+
+    public ResultadoTienda Evaluar() => ResolvedorTienda.Resolver(grid, tabla);
+
+    public void Vender(ObjetoColocado objeto)
+    {
+        if (grid.Quitar(objeto.celda, out ObjetoColocado quitado) && quitado.vista != null)
+            Destroy(quitado.vista);
+        Recalcular();
     }
 }

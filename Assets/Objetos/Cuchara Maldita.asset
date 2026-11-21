@@ -15,7 +15,7 @@ MonoBehaviour:
   nombre: Cuchara Maldita
   sprite: {fileID: -533592479324066679, guid: bb8bb95f9db7b88429ba82ce43014e54, type: 3}
   precioBase: 30
-  peligro: 0
+  peligro: 2
   etiquetas: 03000000
   aura:
   - {x: 1, y: 0}

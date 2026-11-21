@@ -15,7 +15,7 @@ MonoBehaviour:
   nombre: Medallon de Fuego
   sprite: {fileID: 1429525977244594816, guid: def0674530fdb8f41b0a75b33cff229f, type: 3}
   precioBase: 10
-  peligro: 0
+  peligro: 1
   etiquetas: 00000000
   aura:
   - {x: 0, y: 1}
