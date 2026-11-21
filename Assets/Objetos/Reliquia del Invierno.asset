@@ -22,3 +22,5 @@ MonoBehaviour:
   - {x: 1, y: -1}
   - {x: -1, y: 1}
   - {x: -1, y: -1}
+  descripcion: "Enfr\xEDa todo lo que toca. Muy \xFAtil para calmar a los objetos
+    m\xE1s ardientes."

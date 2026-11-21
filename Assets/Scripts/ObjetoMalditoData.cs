@@ -13,4 +13,5 @@ public class ObjetoMalditoData : ScriptableObject
     {
         Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right
     };
+    [TextArea] public string descripcion;
 }

@@ -229,6 +229,8 @@ public class GestorNoche : MonoBehaviour
     {
         if (!enNoche || inquietos.Count == 0) return;
 
+        UIEscala.Aplicar();
+
         if (estilo == null)
             estilo = new GUIStyle(GUI.skin.box) { fontSize = 18, alignment = TextAnchor.MiddleCenter };
 
@@ -238,6 +240,6 @@ public class GestorNoche : MonoBehaviour
 
         float ancho = 560f;
         float alto = inquietos.Count * 26f + 12f;
-        GUI.Box(new Rect(Screen.width - ancho - 10f, 60f, ancho, alto), sb.ToString().TrimEnd(), estilo);
+        GUI.Box(new Rect(UIEscala.Ancho - ancho - 10f, 60f, ancho, alto), sb.ToString().TrimEnd(), estilo);
     }
 }

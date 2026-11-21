@@ -626,6 +626,7 @@ MonoBehaviour:
   intervaloLlegada: 15
   clientesPorDia: 6
   tienda: {fileID: 2018878515}
+  materialSprites: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
 --- !u!4 &926270936
 Transform:
   m_ObjectHideFlags: 0
@@ -1843,6 +1844,7 @@ MonoBehaviour:
   tabla: {fileID: 11400000, guid: d8a7a64b3ec6b1e439bc1c3e70377e36, type: 2}
   gestor: {fileID: 853912725}
   puerta: {x: 6, y: 7}
+  materialSprites: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
 --- !u!4 &1216763244
 Transform:
   m_ObjectHideFlags: 0

@@ -107,6 +107,8 @@ public class GestorDia : MonoBehaviour
 
     private void OnGUI()
     {
+        UIEscala.Aplicar();
+
         if (estilo == null)
         {
             estilo = new GUIStyle(GUI.skin.box) { fontSize = 20, alignment = TextAnchor.MiddleCenter };
@@ -126,6 +128,6 @@ public class GestorDia : MonoBehaviour
             : $"Día {Dia} - {nombre}  {Mathf.CeilToInt(TiempoRestante)} s";
 
         float ancho = 400f;
-        GUI.Box(new Rect(Screen.width - ancho - 10f, 10f, ancho, cierre ? 70f : 40f), texto, estilo);
+        GUI.Box(new Rect(UIEscala.Ancho - ancho - 10f, 10f, ancho, cierre ? 70f : 40f), texto, estilo);
     }
 }

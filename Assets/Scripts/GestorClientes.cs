@@ -10,6 +10,7 @@ public class GestorClientes : MonoBehaviour
     [SerializeField] private float intervaloLlegada = 15f;
     [SerializeField] private int clientesPorDia = 6;
     [SerializeField] private EstadoTienda tienda;
+    [SerializeField] private Material materialSprites;
 
     private readonly List<Cliente> activos = new();
     private int generados;
@@ -54,7 +55,7 @@ public class GestorClientes : MonoBehaviour
         var cliente = go.AddComponent<Cliente>();
         cliente.Termino += c => activos.Remove(c);
         activos.Add(cliente);
-        cliente.Iniciar(perfiles[Random.Range(0, perfiles.Length)], colocador, tienda);
+        cliente.Iniciar(perfiles[Random.Range(0, perfiles.Length)], colocador, tienda, materialSprites);
         generados++;
     }
 }

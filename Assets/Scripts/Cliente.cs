@@ -18,7 +18,7 @@ public class Cliente : MonoBehaviour
     private float espera;
     private int paseosRestantes;
 
-    public void Iniciar(PerfilCliente perfil, ColocadorObjetos colocador, EstadoTienda tienda)
+    public void Iniciar(PerfilCliente perfil, ColocadorObjetos colocador, EstadoTienda tienda, Material material)
     {
         Perfil = perfil;
         this.colocador = colocador;
@@ -28,6 +28,7 @@ public class Cliente : MonoBehaviour
         sr.sprite = perfil.sprite;
         sr.color = perfil.tinte;
         sr.sortingOrder = 10;
+        if (material != null) sr.sharedMaterial = material;
 
         celdaActual = colocador.Grid.puerta;
         transform.position = colocador.CeldaACentro(celdaActual);

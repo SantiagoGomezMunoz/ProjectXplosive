@@ -70,6 +70,8 @@ public class EstadoTienda : MonoBehaviour
 
     private void OnGUI()
     {
+        UIEscala.Aplicar();
+
         if (estiloPanel == null)
         {
             estiloPanel = new GUIStyle(GUI.skin.box) { fontSize = 20, alignment = TextAnchor.MiddleLeft };
@@ -77,14 +79,14 @@ public class EstadoTienda : MonoBehaviour
         }
 
         int peligro = colocador != null ? colocador.PeligroActual : 0;
-        GUI.Box(new Rect(10, Screen.height - 50, 620, 40),
+        GUI.Box(new Rect(10, UIEscala.Alto - 50, 620, 40),
             $"Dinero: {Dinero}    Reputación: {Reputacion}    Peligro: {peligro}",
             estiloPanel);
 
         if (mensajes.Count > 0)
         {
             float alto = mensajes.Count * 24f + 10f;
-            GUI.Box(new Rect(10, Screen.height - 50 - alto - 5, 620, alto),
+            GUI.Box(new Rect(10, UIEscala.Alto - 50 - alto - 5, 620, alto),
                 string.Join("\n", mensajes), estiloMensajes);
         }
     }
