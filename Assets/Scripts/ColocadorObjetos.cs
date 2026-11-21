@@ -9,12 +9,18 @@ public class ColocadorObjetos : MonoBehaviour
     [SerializeField] private Vector2 origen = Vector2.zero;
     [SerializeField] private Sprite spriteCelda;
     [SerializeField] private TablaInteracciones tabla;
+    [SerializeField] private GestorDia gestor;
 
     private readonly System.Collections.Generic.List<SpriteRenderer> marcasAura = new();
     private Transform contenedor;
     private GridTienda grid;
     private SpriteRenderer fantasma;
     private int indiceActual;
+    private string textoPrevia = "";
+    private Vector2Int ultimaCelda = new(int.MinValue, int.MinValue);
+    private int ultimoIndice = -1;
+    private bool sucio = true;
+    private GUIStyle estiloPanel;
 
     private void Awake()
     {
@@ -32,6 +38,17 @@ public class ColocadorObjetos : MonoBehaviour
         Mouse mouse = Mouse.current;
         Keyboard teclado = Keyboard.current;
         if (mouse == null || teclado == null || catalogo.Length == 0) return;
+
+        bool puedeColocar = gestor == null || gestor.FaseActual == FaseDia.Manana;
+        fantasma.gameObject.SetActive(puedeColocar);
+        
+        if (!puedeColocar)
+            {
+            OcultarAura();
+            textoPrevia = "";
+            sucio = true;
+            return;
+        }
 
         for (int i = 0; i < catalogo.Length && i < 9; i++)
         {
@@ -53,6 +70,16 @@ public class ColocadorObjetos : MonoBehaviour
         fantasma.color = valida
             ? new Color(0.6f, 1f, 0.6f, 0.7f)
             : new Color(1f, 0.4f, 0.4f, 0.7f);
+
+        if (sucio || celda != ultimaCelda || indiceActual != ultimoIndice)
+        {
+            textoPrevia = (valida && tabla != null)
+                ? CalcularPrevia(catalogo[indiceActual], celda)
+                : "";
+            ultimaCelda = celda;
+            ultimoIndice = indiceActual;
+            sucio = false;
+        }
 
         if (mouse.leftButton.wasPressedThisFrame && valida)
         {
@@ -124,6 +151,7 @@ public class ColocadorObjetos : MonoBehaviour
 
     private void Recalcular()
     {
+        sucio = true;
         if (tabla == null) return;
         ResultadoTienda r = ResolvedorTienda.Resolver(grid, tabla);
 
@@ -132,5 +160,49 @@ public class ColocadorObjetos : MonoBehaviour
             Debug.Log($"{e.a.data.nombre} + {e.b.data.nombre}: {e.regla.mensaje}");
         foreach (ObjetoColocado o in grid.Todos)
             Debug.Log($"{o.data.nombre} en {o.celda}: precio final {r.PrecioFinal(o)}");
+    }
+
+    private string CalcularPrevia(ObjetoMalditoData data, Vector2Int celda)
+    {
+        ResultadoTienda antes = ResolvedorTienda.Resolver(grid, tabla);
+
+        grid.Colocar(data, celda, out ObjetoColocado temporal);
+        ResultadoTienda despues = ResolvedorTienda.Resolver(grid, tabla);
+
+        var sb = new System.Text.StringBuilder();
+        sb.AppendLine($"{data.nombre}: precio {data.precioBase} -> {despues.PrecioFinal(temporal)}");
+        sb.AppendLine($"Peligro de la tienda: {antes.peligroTotal} -> {despues.peligroTotal}");
+        foreach (EfectoAplicado e in despues.efectos)
+        {
+            if (e.a == temporal || e.b == temporal)
+                sb.AppendLine("- " + e.regla.mensaje);
+        }
+
+        grid.Quitar(celda, out _);
+        return sb.ToString();
+    }
+
+    private void OnGUI()
+    {
+        if (string.IsNullOrEmpty(textoPrevia)) return;
+
+        if (estiloPanel == null)
+        {
+            estiloPanel = new GUIStyle(GUI.skin.box)
+            {
+                fontSize = 18,
+                alignment = TextAnchor.UpperLeft,
+                wordWrap = true
+            };
+        }
+
+        var contenido = new GUIContent(textoPrevia);
+        float alto = estiloPanel.CalcHeight(contenido, 460f);
+        GUI.Box(new Rect(10, 10, 460f, alto + 10f), contenido, estiloPanel);
+    }
+
+    private void OcultarAura()
+    {
+        foreach (SpriteRenderer m in marcasAura) m.gameObject.SetActive(false);
     }
 }
