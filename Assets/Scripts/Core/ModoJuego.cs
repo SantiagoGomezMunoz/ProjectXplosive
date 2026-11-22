@@ -1,0 +1,1 @@
+public enum ModoJuego { Campana, Infinito }
