@@ -10,6 +10,7 @@ public class EstadoPartida
     public int cuotasPagadas;
     public int reputacion;
     public bool terminada;
+    public bool victoria;
 
     public static EstadoPartida Nueva(ConfiguracionPartida configuracion)
     {
