@@ -88,16 +88,12 @@ public static class Economia
             }
         }
 
-        // 3. Fin de campaña o siguiente día
+        // 3. ¿Fin de la campaña?
         r.campanaCompletada = config.EsUltimoDia(estado.dia) && estado.deudaRestante <= 0;
         if (r.campanaCompletada)
         {
             estado.terminada = true;
             estado.victoria = true;
-        }
-        else
-        {
-            estado.dia++;
         }
 
         return r;
@@ -127,5 +123,11 @@ public static class Economia
         foreach (int i in disponibles)
             if (mejor < 0 || valores[i] < valores[mejor]) mejor = i;
         return mejor;
+    }
+
+    // Pasa al día siguiente (no hace nada si la partida terminó)
+    public static void AvanzarDia(EstadoPartida estado)
+    {
+        if (!estado.terminada) estado.dia++;
     }
 }

@@ -40,7 +40,7 @@ public class EconomiaTests
 
         Assert.IsTrue(r.alquilerPagado);
         Assert.AreEqual(80, estado.dinero);
-        Assert.AreEqual(2, estado.dia);
+        Assert.AreEqual(1, estado.dia);
         Assert.AreEqual(0, estado.reputacion);
     }
 
@@ -57,7 +57,7 @@ public class EconomiaTests
         CollectionAssert.AreEqual(new List<int> { 1 }, r.indicesEmbargados);
         Assert.AreEqual(-1, estado.reputacion);
         Assert.AreEqual(10, estado.dinero);
-        Assert.AreEqual(2, estado.dia);
+        Assert.AreEqual(1, estado.dia);
         Assert.IsFalse(estado.terminada);
     }
 
@@ -90,7 +90,7 @@ public class EconomiaTests
         Assert.AreEqual(1780, estado.dinero);        // 3000 - 20 - 1200
         Assert.AreEqual(4800, estado.deudaRestante);
         Assert.AreEqual(1, estado.cuotasPagadas);
-        Assert.AreEqual(16, estado.dia);
+        Assert.AreEqual(15, estado.dia);
     }
 
     [Test]
@@ -176,7 +176,7 @@ public class EconomiaTests
         Assert.AreEqual(25, r.alquiler);
         Assert.AreEqual(0, r.cuota);
         Assert.AreEqual(475, estado.dinero);
-        Assert.AreEqual(16, estado.dia);
+        Assert.AreEqual(15, estado.dia);
     }
 
     [Test]
@@ -190,6 +190,27 @@ public class EconomiaTests
 
         Assert.IsTrue(r.partidaTerminada);
         Assert.AreEqual(100, estado.dinero);
+        Assert.AreEqual(1, estado.dia);
+    }
+
+    [Test]
+    public void AvanzarDia_SumaUnDia()
+    {
+        EstadoPartida estado = EstadoPartida.Nueva(Campana());
+
+        Economia.AvanzarDia(estado);
+
+        Assert.AreEqual(2, estado.dia);
+    }
+
+    [Test]
+    public void AvanzarDia_NoHaceNadaSiLaPartidaTermino()
+    {
+        EstadoPartida estado = EstadoPartida.Nueva(Campana());
+        estado.terminada = true;
+
+        Economia.AvanzarDia(estado);
+
         Assert.AreEqual(1, estado.dia);
     }
 }

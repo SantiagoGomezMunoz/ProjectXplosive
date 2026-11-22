@@ -5,6 +5,8 @@ public class ResumenCierre : MonoBehaviour
     [SerializeField] private GestorDia gestorDia;
     [SerializeField] private EstadoTienda tienda;
     [SerializeField] private ColocadorObjetos colocador;
+    [SerializeField] private Partida partida;
+    [SerializeField] private CierreDia cierre;
 
     private static readonly string[] frasesSinVentas =
     {
@@ -71,18 +73,51 @@ public class ResumenCierre : MonoBehaviour
 
     private string Construir()
     {
+        ResultadoCierre r = cierre.UltimoResultado;
+        EstadoPartida estado = partida.Estado;
         int variacion = tienda.Reputacion - tienda.ReputacionInicioDia;
         string signo = variacion >= 0 ? "+" : "";
 
-        return
-            $"FIN DEL DÍA {gestorDia.Dia}\n\n" +
-            $"Ventas: {tienda.VentasDia} (ingresos {tienda.IngresosDia})\n" +
-            $"Clientes asustados: {tienda.SustosDia}\n" +
-            $"Noche: {tienda.CalmadosNoche} calmados, {tienda.DescontroladosNoche} sin calmar\n" +
-            $"Peligro de la tienda: {colocador.PeligroActual}\n" +
-            $"Reputación: {tienda.Reputacion} ({signo}{variacion})\n" +
-            $"Dinero: {tienda.Dinero}\n\n" +
-            $"\"{ElegirFrase()}\"";
+        var sb = new System.Text.StringBuilder();
+        sb.AppendLine($"FIN DEL DÍA {r.dia}");
+        sb.AppendLine();
+        sb.AppendLine($"Ventas: {tienda.VentasDia} (ingresos {tienda.IngresosDia})");
+        sb.AppendLine($"Clientes asustados: {tienda.SustosDia}");
+        sb.AppendLine($"Noche: {tienda.CalmadosNoche} calmados, {tienda.DescontroladosNoche} sin calmar");
+        sb.AppendLine($"Peligro de la tienda: {colocador.PeligroActual}");
+        sb.AppendLine(r.alquilerPagado
+            ? $"Alquiler: -{r.alquiler}"
+            : $"Alquiler: {r.alquiler} (no se pudo pagar)");
+
+        if (r.cuota > 0)
+            sb.AppendLine(r.cuotaPagada
+                ? $"Cuota de la deuda: -{r.cuota}"
+                : $"Cuota de la deuda: {r.cuota} (no se pudo pagar)");
+
+        if (cierre.NombresEmbargados.Count > 0)
+            sb.AppendLine($"Embargados: {string.Join(", ", cierre.NombresEmbargados)}");
+
+        if (estado.modo == ModoJuego.Campana)
+            sb.AppendLine($"Deuda restante: {estado.deudaRestante}");
+
+        sb.AppendLine($"Reputación: {tienda.Reputacion} ({signo}{variacion})");
+        sb.AppendLine($"Dinero: {tienda.Dinero}");
+        sb.AppendLine();
+        sb.Append(Final());
+        return sb.ToString();
+    }
+
+    private string Final()
+    {
+        EstadoPartida e = partida.Estado;
+
+        if (e.terminada && e.victoria)
+            return "\"¡Pagaste la deuda! La tienda es tuya.\"\n\nPulsa R para empezar una nueva partida.";
+
+        if (e.terminada)
+            return $"\"Quiebra: no pudiste pagar. Días completos: {e.dia - 1}.\"\n\nPulsa R para empezar una nueva partida.";
+
+        return $"\"{ElegirFrase()}\"";
     }
 
     private string ElegirFrase()
@@ -102,6 +137,8 @@ public class ResumenCierre : MonoBehaviour
     {
         if (!visible) return;
 
+        UIEscala.Aplicar();
+
         if (estilo == null)
         {
             estilo = new GUIStyle(GUI.skin.box)
@@ -115,6 +152,6 @@ public class ResumenCierre : MonoBehaviour
 
         float ancho = 560f;
         float alto = estilo.CalcHeight(new GUIContent(texto), ancho);
-        GUI.Box(new Rect((Screen.width - ancho) / 2f, (Screen.height - alto) / 2f, ancho, alto), texto, estilo);
+        GUI.Box(new Rect((UIEscala.Ancho - ancho) / 2f, (UIEscala.Alto - alto) / 2f, ancho, alto), texto, estilo);
     }
 }

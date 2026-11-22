@@ -7,6 +7,9 @@ public enum FaseDia { Manana, Tarde, Noche, Cierre }
 
 public class GestorDia : MonoBehaviour
 {
+    [Header("Referencias")]
+    [SerializeField] private Partida partida;
+
     [Header("Duración (segundos)")]
     [SerializeField] private float duracionManana = 60f;
     [SerializeField] private float duracionTarde = 90f;
@@ -17,7 +20,7 @@ public class GestorDia : MonoBehaviour
     [SerializeField] private float velocidadTransicion = 2f;
 
     public FaseDia FaseActual { get; private set; } = FaseDia.Manana;
-    public int Dia { get; private set; } = 1;
+    public int Dia => partida.Estado.dia;
     public float TiempoRestante { get; private set; }
     public event Action<FaseDia> FaseCambiada;
 
@@ -57,9 +60,9 @@ public class GestorDia : MonoBehaviour
 
         if (FaseActual == FaseDia.Cierre)
         {
-            if (teclado != null && teclado.spaceKey.wasPressedThisFrame)
+            if (!partida.Estado.terminada && teclado != null && teclado.spaceKey.wasPressedThisFrame)
             {
-                Dia++;
+                Economia.AvanzarDia(partida.Estado);
                 IniciarFase(FaseDia.Manana);
             }
             return;
@@ -67,10 +70,9 @@ public class GestorDia : MonoBehaviour
 
         TiempoRestante -= Time.deltaTime;
         bool saltar = false;
-        #if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         saltar = teclado != null && teclado.nKey.wasPressedThisFrame; // solo para pruebas
-        #endif
-        
+#endif
         if (TiempoRestante <= 0f || saltar) IniciarFase(Siguiente(FaseActual));
     }
 
@@ -123,9 +125,13 @@ public class GestorDia : MonoBehaviour
         };
 
         bool cierre = FaseActual == FaseDia.Cierre;
-        string texto = cierre
-            ? $"Día {Dia} - Cierre\nPulsa ESPACIO para empezar el día {Dia + 1}"
-            : $"Día {Dia} - {nombre}  {Mathf.CeilToInt(TiempoRestante)} s";
+        string texto;
+        if (cierre && partida.Estado.terminada)
+            texto = $"Día {Dia} - Fin de la partida\nPulsa R para empezar de nuevo";
+        else if (cierre)
+            texto = $"Día {Dia} - Cierre\nPulsa ESPACIO para empezar el día {Dia + 1}";
+        else
+            texto = $"Día {Dia} - {nombre}  {Mathf.CeilToInt(TiempoRestante)} s";
 
         float ancho = 400f;
         GUI.Box(new Rect(UIEscala.Ancho - ancho - 10f, 10f, ancho, cierre ? 70f : 40f), texto, estilo);

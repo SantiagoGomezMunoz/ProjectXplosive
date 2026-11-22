@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class EstadoTienda : MonoBehaviour
 {
+    [SerializeField] private Partida partida;
     [SerializeField] private ColocadorObjetos colocador;
     [SerializeField] private int reputacionPorVenta = 1;
     [SerializeField] private int reputacionPorSusto = -1;
     [SerializeField] private int mensajesVisibles = 4;
 
-    public int Dinero { get; private set; }
-    public int Reputacion { get; private set; }
+    public int Dinero => partida.Estado.dinero;
+    public int Reputacion => partida.Estado.reputacion;
+    public int DeudaRestante => partida.Estado.deudaRestante;
 
     // Contadores del día (para el resumen del cierre)
     public int VentasDia { get; private set; }
@@ -41,8 +43,8 @@ public class EstadoTienda : MonoBehaviour
 
     public void RegistrarVenta(int monto, string cliente, string objeto)
     {
-        Dinero += monto;
-        Reputacion += reputacionPorVenta;
+        partida.Estado.dinero += monto;
+        partida.Estado.reputacion += reputacionPorVenta;
         VentasDia++;
         IngresosDia += monto;
         Mensaje($"{cliente} compró {objeto} por {monto}.");
@@ -50,14 +52,14 @@ public class EstadoTienda : MonoBehaviour
 
     public void RegistrarSusto(string cliente)
     {
-        Reputacion += reputacionPorSusto;
+        partida.Estado.reputacion += reputacionPorSusto;
         SustosDia++;
         Mensaje($"¡{cliente} se asustó y se fue! Reputación {reputacionPorSusto}.");
     }
 
     public void CambiarReputacion(int delta, string motivo)
     {
-        Reputacion += delta;
+        partida.Estado.reputacion += delta;
         Mensaje($"{motivo} Reputación {delta}.");
     }
 
@@ -79,14 +81,16 @@ public class EstadoTienda : MonoBehaviour
         }
 
         int peligro = colocador != null ? colocador.PeligroActual : 0;
-        GUI.Box(new Rect(10, UIEscala.Alto - 50, 620, 40),
-            $"Dinero: {Dinero}    Reputación: {Reputacion}    Peligro: {peligro}",
+        string deuda = partida.Config.modo == ModoJuego.Campana ? $"    Deuda: {DeudaRestante}" : "";
+
+        GUI.Box(new Rect(10, UIEscala.Alto - 50, 740, 40),
+            $"Dinero: {Dinero}    Reputación: {Reputacion}    Peligro: {peligro}{deuda}",
             estiloPanel);
 
         if (mensajes.Count > 0)
         {
             float alto = mensajes.Count * 24f + 10f;
-            GUI.Box(new Rect(10, UIEscala.Alto - 50 - alto - 5, 620, alto),
+            GUI.Box(new Rect(10, UIEscala.Alto - 50 - alto - 5, 740, alto),
                 string.Join("\n", mensajes), estiloMensajes);
         }
     }
