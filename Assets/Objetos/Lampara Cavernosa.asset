@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a703e1895141054b92468796e4a267a, type: 3}
+  m_Name: Lampara Cavernosa
+  m_EditorClassIdentifier: Assembly-CSharp::ObjetoMalditoData
+  nombre: "L\xE1mpara Cavernosa"
+  sprite: {fileID: -9165061949355916219, guid: b30c322065e078d4d934495281835b5a, type: 3}
+  precioBase: 15
+  peligro: 2
+  etiquetas: 00000000
+  aura:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: -1, y: 0}
+  - {x: 1, y: 0}
+  descripcion: "Ilumina los rincones m\xE1s oscuros... Mientras se r\xEDe de tu cara."

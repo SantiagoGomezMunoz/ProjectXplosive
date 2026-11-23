@@ -21,6 +21,10 @@ MonoBehaviour:
     cantidad: 2
   - objeto: {fileID: 11400000, guid: 66cc027fc181af54ea913bfaaddc4b36, type: 2}
     cantidad: 2
+  - objeto: {fileID: 11400000, guid: 6656c20f307f96e47864fb6903f95472, type: 2}
+    cantidad: 2
+  - objeto: {fileID: 11400000, guid: 6a8e04ef53ab2e6459a7859231e0328a, type: 2}
+    cantidad: 2
   suministroDiarioProvisional: 2
   actos:
   - nombre: Aprender el oficio
@@ -42,3 +46,19 @@ MonoBehaviour:
   alquilerInicialInfinito: 20
   diasPorSubidaInfinito: 10
   subidaAlquilerInfinito: 5
+  tramosReputacion:
+  - nombre: Baja
+    desde: -9999
+    clientesPorTarde: 4
+    lotesExtra: 0
+    pistasPeores: 1
+  - nombre: Media
+    desde: 0
+    clientesPorTarde: 6
+    lotesExtra: 0
+    pistasPeores: 0
+  - nombre: Alta
+    desde: 6
+    clientesPorTarde: 8
+    lotesExtra: 1
+    pistasPeores: 0

@@ -52,6 +52,11 @@ public class ConfiguracionPartida : ScriptableObject
         new TramoReputacion { nombre = "Alta", desde = 6, clientesPorTarde = 8, lotesExtra = 1 }
     };
 
+    [Header("Subasta")]
+    [Min(0)] public int lotesPorNoche = 3;
+    [Range(0.1f, 1.5f)] public float factorPrecioSalida = 0.6f;
+    [Min(1)] public int incrementoPuja = 5;
+
     public int TotalDias
     {
         get

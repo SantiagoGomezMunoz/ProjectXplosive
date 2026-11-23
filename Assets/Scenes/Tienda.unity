@@ -619,15 +619,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GestorClientes
   gestorDia: {fileID: 853912725}
   colocador: {fileID: 1216763243}
+  partida: {fileID: 1778756488}
   perfiles:
   - {fileID: 11400000, guid: 34d9e053551b2bf48baa08520a87721e, type: 2}
   - {fileID: 11400000, guid: ec2b39660d1faba4ca505abb449cb80f, type: 2}
   - {fileID: 11400000, guid: 1434c6ec422b93f4b9fe38176708fc03, type: 2}
-  primerClienteEn: 2
-  intervaloLlegada: 15
-  clientesPorDia: 6
   tienda: {fileID: 2018878515}
   materialSprites: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  primerClienteEn: 2
+  margenFinal: 10
 --- !u!4 &926270936
 Transform:
   m_ObjectHideFlags: 0

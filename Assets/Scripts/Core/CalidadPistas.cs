@@ -1,0 +1,1 @@
+public enum CalidadPistas { Claras, Parciales, Confusas }
