@@ -10,6 +10,16 @@ public class ObjetoInicial
 }
 
 [Serializable]
+public class TramoReputacion
+{
+    public string nombre;
+    public int desde;                 // reputación mínima (inclusive) de este tramo
+    [Min(0)] public int clientesPorTarde = 6;
+    [Min(0)] public int lotesExtra;   // lotes adicionales en la subasta
+    public bool pistasPeores;         // las pistas de la subasta salen peores
+}
+
+[Serializable]
 public class ConfigActo
 {
     public string nombre;
@@ -23,6 +33,7 @@ public class ConfiguracionPartida : ScriptableObject
 {
     public ModoJuego modo = ModoJuego.Campana;
     public int dineroInicial = 100;
+
     [Header("Almacén")]
     public List<ObjetoInicial> almacenInicial = new();
     [Min(0)] public int suministroDiarioProvisional = 2;
@@ -32,6 +43,14 @@ public class ConfiguracionPartida : ScriptableObject
     public int alquilerInicialInfinito = 20;
     [Min(1)] public int diasPorSubidaInfinito = 10;
     public int subidaAlquilerInfinito = 5;
+
+    [Header("Reputación")]
+    public List<TramoReputacion> tramosReputacion = new()
+    {
+        new TramoReputacion { nombre = "Baja", desde = -9999, clientesPorTarde = 4, pistasPeores = true },
+        new TramoReputacion { nombre = "Media", desde = 0, clientesPorTarde = 6 },
+        new TramoReputacion { nombre = "Alta", desde = 6, clientesPorTarde = 8, lotesExtra = 1 }
+    };
 
     public int TotalDias
     {
@@ -98,4 +117,22 @@ public class ConfiguracionPartida : ScriptableObject
     }
 
     public bool EsUltimoDia(int dia) => modo == ModoJuego.Campana && dia == TotalDias;
+
+        public TramoReputacion TramoPara(int reputacion)
+    {
+        TramoReputacion elegido = null;
+        TramoReputacion masBajo = null;
+
+        foreach (TramoReputacion t in tramosReputacion)
+        {
+            if (masBajo == null || t.desde < masBajo.desde) masBajo = t;
+            if (reputacion >= t.desde && (elegido == null || t.desde > elegido.desde)) elegido = t;
+        }
+
+        return elegido ?? masBajo;
+    }
+
+    public int ClientesPorTarde(int reputacion) => TramoPara(reputacion)?.clientesPorTarde ?? 6;
+    public int LotesExtra(int reputacion) => TramoPara(reputacion)?.lotesExtra ?? 0;
+    public bool PistasPeores(int reputacion) => TramoPara(reputacion)?.pistasPeores ?? false;
 }

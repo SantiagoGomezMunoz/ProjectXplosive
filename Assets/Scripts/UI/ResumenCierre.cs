@@ -100,7 +100,9 @@ public class ResumenCierre : MonoBehaviour
         if (estado.modo == ModoJuego.Campana)
             sb.AppendLine($"Deuda restante: {estado.deudaRestante}");
 
-        sb.AppendLine($"Reputación: {tienda.Reputacion} ({signo}{variacion})");
+        string tramo = partida.Config.TramoPara(tienda.Reputacion)?.nombre;
+        string repTexto = string.IsNullOrEmpty(tramo) ? $"{tienda.Reputacion}" : $"{tienda.Reputacion} ({tramo})";
+        sb.AppendLine($"Reputación: {repTexto} ({signo}{variacion})");
         sb.AppendLine($"Dinero: {tienda.Dinero}");
         sb.AppendLine();
         sb.Append(Final());

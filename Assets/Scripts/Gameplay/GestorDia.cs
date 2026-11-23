@@ -20,6 +20,7 @@ public class GestorDia : MonoBehaviour
     [SerializeField] private float velocidadTransicion = 2f;
 
     public FaseDia FaseActual { get; private set; } = FaseDia.Manana;
+    public float DuracionTarde => duracionTarde;
     public int Dia => partida.Estado.dia;
     public float TiempoRestante { get; private set; }
     public event Action<FaseDia> FaseCambiada;

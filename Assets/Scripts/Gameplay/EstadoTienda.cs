@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class EstadoTienda : MonoBehaviour
 {
@@ -24,6 +25,18 @@ public class EstadoTienda : MonoBehaviour
     private readonly Queue<string> mensajes = new();
     private GUIStyle estiloPanel;
     private GUIStyle estiloMensajes;
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    // Solo para pruebas: F1 baja la reputación en 3, F2 la sube en 3
+    private void Update()
+    {
+        Keyboard teclado = Keyboard.current;
+        if (teclado == null) return;
+
+        if (teclado.f1Key.wasPressedThisFrame) partida.Estado.reputacion -= 3;
+        if (teclado.f2Key.wasPressedThisFrame) partida.Estado.reputacion += 3;
+    }
+#endif
 
     public void NuevoDia()
     {
@@ -81,16 +94,18 @@ public class EstadoTienda : MonoBehaviour
         }
 
         int peligro = colocador != null ? colocador.PeligroActual : 0;
+        string tramo = partida.Config.TramoPara(Reputacion)?.nombre;
+        string reputacion = string.IsNullOrEmpty(tramo) ? $"{Reputacion}" : $"{Reputacion} ({tramo})";
         string deuda = partida.Config.modo == ModoJuego.Campana ? $"    Deuda: {DeudaRestante}" : "";
 
-        GUI.Box(new Rect(10, UIEscala.Alto - 50, 740, 40),
-            $"Dinero: {Dinero}    Reputación: {Reputacion}    Peligro: {peligro}{deuda}",
+        GUI.Box(new Rect(10, UIEscala.Alto - 50, 820, 40),
+            $"Dinero: {Dinero}    Reputación: {reputacion}    Peligro: {peligro}{deuda}",
             estiloPanel);
 
         if (mensajes.Count > 0)
         {
             float alto = mensajes.Count * 24f + 10f;
-            GUI.Box(new Rect(10, UIEscala.Alto - 50 - alto - 5, 740, alto),
+            GUI.Box(new Rect(10, UIEscala.Alto - 50 - alto - 5, 820, alto),
                 string.Join("\n", mensajes), estiloMensajes);
         }
     }
