@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f1b098a1cd43584685a2158598cbe64, type: 3}
   m_Name: Infinito
   m_EditorClassIdentifier: Tienda.Core::ConfiguracionPartida
-  modo: 0
+  modo: 1
   dineroInicial: 100
+  almacenInicial: []
+  suministroDiarioProvisional: 2
   actos: []
   alquilerInicialInfinito: 20
   diasPorSubidaInfinito: 10

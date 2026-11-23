@@ -9,6 +9,7 @@ public class ObjetoMalditoData : ScriptableObject
     public int precioBase = 10;
     [Range(0, 5)] public int peligro;
     public List<Etiqueta> etiquetas = new();
+    public string Id => name;
     public List<Vector2Int> aura = new()
     {
         Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right

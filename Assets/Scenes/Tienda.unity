@@ -555,6 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05fc4feadd568b64cb522e9e2ab4c4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GestorDia
+  partida: {fileID: 1778756488}
   duracionManana: 60
   duracionTarde: 90
   duracionNoche: 60
@@ -674,6 +675,8 @@ MonoBehaviour:
   gestorDia: {fileID: 853912725}
   tienda: {fileID: 2018878515}
   colocador: {fileID: 1216763243}
+  partida: {fileID: 1778756488}
+  cierre: {fileID: 1417579798}
 --- !u!4 &965336584
 Transform:
   m_ObjectHideFlags: 0
@@ -1834,10 +1837,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColocadorObjetos
   camara: {fileID: 519420031}
-  catalogo:
-  - {fileID: 11400000, guid: 51d56dd93c31d8842a7cbe3b440e1a83, type: 2}
-  - {fileID: 11400000, guid: 66cc027fc181af54ea913bfaaddc4b36, type: 2}
-  - {fileID: 11400000, guid: ca91d99493409784ab06ffcec72789d9, type: 2}
+  catalogo: {fileID: 11400000, guid: 1d754217e83b7754c8b903aeb9c6217b, type: 2}
+  partida: {fileID: 1778756488}
   tamanoGrid: {x: 12, y: 8}
   origen: {x: -6, y: -4}
   spriteCelda: {fileID: 7482667652216324306, guid: 88d2f15a6bc463c40be39b6454ee3b74, type: 3}
@@ -1903,6 +1904,149 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 992050658}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1417579797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1417579799}
+  - component: {fileID: 1417579798}
+  m_Layer: 0
+  m_Name: CierreDia
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1417579798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417579797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09dcf52a0453b1245b5450d8c2fcb1ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CierreDia
+  gestorDia: {fileID: 853912725}
+  partida: {fileID: 1778756488}
+  colocador: {fileID: 1216763243}
+  tienda: {fileID: 2018878515}
+  catalogo: {fileID: 11400000, guid: 1d754217e83b7754c8b903aeb9c6217b, type: 2}
+--- !u!4 &1417579799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417579797}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.14693, y: 1.28875, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1728593162
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1728593164}
+  - component: {fileID: 1728593163}
+  m_Layer: 0
+  m_Name: SuministroProvisional
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1728593163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728593162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0487f4675c30be84b99f2873d3ad50fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SuministroProvisional
+  gestorDia: {fileID: 853912725}
+  partida: {fileID: 1778756488}
+  catalogo: {fileID: 11400000, guid: 1d754217e83b7754c8b903aeb9c6217b, type: 2}
+  tienda: {fileID: 2018878515}
+  desdeElDia: 2
+--- !u!4 &1728593164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728593162}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.14693, y: 1.28875, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1778756487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1778756489}
+  - component: {fileID: 1778756488}
+  m_Layer: 0
+  m_Name: Partida
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1778756488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778756487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2def2325e84d0a345adbd491c69c3ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Partida
+  config: {fileID: 11400000, guid: 1a7db165d72f3f34a852ecf61967337e, type: 2}
+--- !u!4 &1778756489
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778756487}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.14693, y: 1.28875, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1852953302
@@ -2128,6 +2272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6068c410201571e44b83ef40652112ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EstadoTienda
+  partida: {fileID: 1778756488}
   colocador: {fileID: 1216763243}
   reputacionPorVenta: 1
   reputacionPorSusto: -1
@@ -2162,3 +2307,6 @@ SceneRoots:
   - {fileID: 2018878516}
   - {fileID: 965336584}
   - {fileID: 585884895}
+  - {fileID: 1778756489}
+  - {fileID: 1417579799}
+  - {fileID: 1728593164}

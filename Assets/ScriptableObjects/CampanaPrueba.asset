@@ -14,7 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tienda.Core::ConfiguracionPartida
   modo: 0
   dineroInicial: 100
-  actos: []
+  almacenInicial: []
+  suministroDiarioProvisional: 2
+  actos:
+  - nombre: 1
+    dias: 2
+    alquilerDiario: 20
+    cuotaFinal: 100
+  - nombre: 2
+    dias: 2
+    alquilerDiario: 20
+    cuotaFinal: 100
+  - nombre: 3
+    dias: 2
+    alquilerDiario: 20
+    cuotaFinal: 100
   alquilerInicialInfinito: 20
   diasPorSubidaInfinito: 10
   subidaAlquilerInfinito: 5

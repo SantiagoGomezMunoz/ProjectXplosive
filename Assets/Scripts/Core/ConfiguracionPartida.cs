@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+public class ObjetoInicial
+{
+    public ObjetoMalditoData objeto;
+    [Min(1)] public int cantidad = 1;
+}
+
+[Serializable]
 public class ConfigActo
 {
     public string nombre;
@@ -16,6 +23,9 @@ public class ConfiguracionPartida : ScriptableObject
 {
     public ModoJuego modo = ModoJuego.Campana;
     public int dineroInicial = 100;
+    [Header("Almacén")]
+    public List<ObjetoInicial> almacenInicial = new();
+    [Min(0)] public int suministroDiarioProvisional = 2;
     public List<ConfigActo> actos = new();
 
     [Header("Solo modo infinito")]

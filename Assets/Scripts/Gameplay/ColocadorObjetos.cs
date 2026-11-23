@@ -16,7 +16,8 @@ public class ColocadorObjetos : MonoBehaviour
     }
 
     [SerializeField] private Camera camara;
-    [SerializeField] private ObjetoMalditoData[] catalogo;
+    [SerializeField] private CatalogoObjetos catalogo;
+    [SerializeField] private Partida partida;
     [SerializeField] private Vector2Int tamanoGrid = new(12, 8);
     [SerializeField] private Vector2 origen = Vector2.zero;
     [SerializeField] private Sprite spriteCelda;
@@ -63,23 +64,22 @@ public class ColocadorObjetos : MonoBehaviour
         fantasma = new GameObject("Fantasma").AddComponent<SpriteRenderer>();
         fantasma.sortingOrder = 100;
         contenedor = new GameObject("Objetos colocados").transform;
-        ActualizarFantasma();
     }
 
     private void Update()
     {
         Mouse mouse = Mouse.current;
         Keyboard teclado = Keyboard.current;
-        if (mouse == null || teclado == null || catalogo.Length == 0) return;
+        if (mouse == null || teclado == null) return;
 
         if (teclado.hKey.wasPressedThisFrame) mostrarLeyenda = !mostrarLeyenda;
 
         bool puedeColocar = gestor == null || gestor.FaseActual == FaseDia.Manana;
-        fantasma.gameObject.SetActive(puedeColocar);
         lineasCuadricula.SetActive(puedeColocar);
 
         if (!puedeColocar)
         {
+            fantasma.gameObject.SetActive(false);
             OcultarAura();
             textoPrevia = "";
             flotantes.Clear();
@@ -87,14 +87,16 @@ public class ColocadorObjetos : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < catalogo.Length && i < 9; i++)
+        List<EntradaAlmacen> almacen = partida.Estado.almacen;
+        if (indiceActual >= almacen.Count) indiceActual = Mathf.Max(0, almacen.Count - 1);
+
+        for (int i = 0; i < almacen.Count && i < 9; i++)
         {
-            if (teclado[(Key)((int)Key.Digit1 + i)].wasPressedThisFrame)
-            {
-                indiceActual = i;
-                ActualizarFantasma();
-            }
+            if (teclado[(Key)((int)Key.Digit1 + i)].wasPressedThisFrame) indiceActual = i;
         }
+
+        ObjetoMalditoData elegido = almacen.Count > 0 ? catalogo.Buscar(almacen[indiceActual].id) : null;
+        fantasma.sprite = elegido != null ? elegido.sprite : null;
 
         Vector2 pantalla = mouse.position.ReadValue();
         Vector3 mundo = camara.ScreenToWorldPoint(
@@ -102,13 +104,14 @@ public class ColocadorObjetos : MonoBehaviour
         Vector2Int celda = Vector2Int.FloorToInt((Vector2)mundo - origen);
 
         grid.TryObtener(celda, out ObjetoColocado bajoCursor);
-        bool valida = grid.EstaLibre(celda);
+        bool valida = elegido != null && grid.EstaLibre(celda);
 
         // Sobre un objeto colocado se muestra su alcance; si no, el del objeto elegido
-        ObjetoMalditoData datosAlcance = bajoCursor != null ? bajoCursor.data : catalogo[indiceActual];
-        MostrarAura(datosAlcance, celda);
+        ObjetoMalditoData datosAlcance = bajoCursor != null ? bajoCursor.data : elegido;
+        if (datosAlcance != null) MostrarAura(datosAlcance, celda);
+        else OcultarAura();
 
-        fantasma.gameObject.SetActive(bajoCursor == null);
+        fantasma.gameObject.SetActive(elegido != null && bajoCursor == null);
         fantasma.transform.position = CeldaACentro(celda);
         fantasma.color = valida
             ? new Color(0.6f, 1f, 0.6f, 0.7f)
@@ -116,37 +119,41 @@ public class ColocadorObjetos : MonoBehaviour
 
         if (sucio || celda != ultimaCelda || indiceActual != ultimoIndice)
         {
-            ActualizarInformacion(celda, valida, bajoCursor);
+            ActualizarInformacion(celda, valida, bajoCursor, elegido);
             ultimaCelda = celda;
             ultimoIndice = indiceActual;
             sucio = false;
         }
 
-        if (mouse.leftButton.wasPressedThisFrame && valida)
-        {
-            ObjetoMalditoData data = catalogo[indiceActual];
-            if (grid.Colocar(data, celda, out ObjetoColocado colocado))
-            {
-                var go = new GameObject(data.nombre);
-                var sr = go.AddComponent<SpriteRenderer>();
-                sr.sprite = data.sprite;
-                if (materialSprites != null) sr.sharedMaterial = materialSprites;
-                go.transform.position = CeldaACentro(celda);
-                go.transform.SetParent(contenedor);
-                colocado.vista = go;
-                Recalcular();
-            }
-        }
+        if (mouse.leftButton.wasPressedThisFrame && valida) Colocar(elegido, celda);
 
         if (mouse.rightButton.wasPressedThisFrame && grid.Quitar(celda, out ObjetoColocado quitado))
         {
             Destroy(quitado.vista);
+            partida.Estado.AgregarAlAlmacen(quitado.data.Id);
             Recalcular();
         }
     }
 
-    private void ActualizarFantasma() =>
-        fantasma.sprite = catalogo.Length > 0 ? catalogo[indiceActual].sprite : null;
+    private void Colocar(ObjetoMalditoData data, Vector2Int celda)
+    {
+        if (!partida.Estado.QuitarDelAlmacen(data.Id)) return;
+
+        if (!grid.Colocar(data, celda, out ObjetoColocado colocado))
+        {
+            partida.Estado.AgregarAlAlmacen(data.Id);
+            return;
+        }
+
+        var go = new GameObject(data.nombre);
+        var sr = go.AddComponent<SpriteRenderer>();
+        sr.sprite = data.sprite;
+        if (materialSprites != null) sr.sharedMaterial = materialSprites;
+        go.transform.position = CeldaACentro(celda);
+        go.transform.SetParent(contenedor);
+        colocado.vista = go;
+        Recalcular();
+    }
 
     public Vector3 CeldaACentro(Vector2Int c) =>
         new Vector3(origen.x + c.x + 0.5f, origen.y + c.y + 0.5f, 0f);
@@ -234,7 +241,7 @@ public class ColocadorObjetos : MonoBehaviour
 
     // ---------- Información en pantalla ----------
 
-    private void ActualizarInformacion(Vector2Int celda, bool valida, ObjetoColocado bajoCursor)
+    private void ActualizarInformacion(Vector2Int celda, bool valida, ObjetoColocado bajoCursor, ObjetoMalditoData elegido)
     {
         flotantes.Clear();
         textoPrevia = "";
@@ -248,9 +255,13 @@ public class ColocadorObjetos : MonoBehaviour
         {
             textoPrevia = "Puerta: por aquí entran los clientes.\nNo se puede colocar nada aquí.";
         }
+        else if (elegido == null)
+        {
+            if (grid.EstaDentro(celda)) textoPrevia = "El almacén está vacío: no hay objetos para colocar.";
+        }
         else if (valida)
         {
-            textoPrevia = CalcularPrevia(catalogo[indiceActual], celda);
+            textoPrevia = CalcularPrevia(elegido, celda);
         }
     }
 
@@ -278,7 +289,7 @@ public class ColocadorObjetos : MonoBehaviour
 
         if (!hayEfectos) sb.AppendLine("  Sin efectos con los objetos cercanos.");
         sb.AppendLine($"Precio final: {r.PrecioFinal(objeto)}");
-        sb.Append("Clic derecho: quitar");
+        sb.Append("Clic derecho: guardar en el almacén");
         return sb.ToString();
     }
 
@@ -455,7 +466,31 @@ public class ColocadorObjetos : MonoBehaviour
             GUI.Box(new Rect(x - tam.x / 2f, arribaY, tam.x, tam.y), f.texto, estilo);
         }
 
-        if (gestor == null || gestor.FaseActual == FaseDia.Manana) DibujarLeyenda();
+        if (gestor == null || gestor.FaseActual == FaseDia.Manana)
+        {
+            DibujarAlmacen();
+            DibujarLeyenda();
+        }
+    }
+
+    private void DibujarAlmacen()
+    {
+        List<EntradaAlmacen> almacen = partida.Estado.almacen;
+        var sb = new StringBuilder("ALMACÉN\n");
+
+        if (almacen.Count == 0) sb.Append("(vacío)");
+
+        for (int i = 0; i < almacen.Count && i < 9; i++)
+        {
+            ObjetoMalditoData d = catalogo.Buscar(almacen[i].id);
+            string nombre = d != null ? d.nombre : almacen[i].id;
+            sb.AppendLine($"{(i == indiceActual ? ">" : " ")} {i + 1}. {nombre} x{almacen[i].cantidad}");
+        }
+
+        string texto = sb.ToString().TrimEnd();
+        float ancho = 300f;
+        float alto = estiloLeyenda.CalcHeight(new GUIContent(texto), ancho);
+        GUI.Box(new Rect(UIEscala.Ancho - ancho - 10f, 60f, ancho, alto), texto, estiloLeyenda);
     }
 
     private void DibujarLeyenda()
@@ -467,8 +502,8 @@ public class ColocadorObjetos : MonoBehaviour
         }
 
         string texto =
-            $"WASD: moverte    1 a {Mathf.Min(catalogo.Length, 9)}: elegir objeto\n" +
-            "Clic izquierdo: colocar    Clic derecho: quitar\n" +
+            "WASD: moverte    Teclas 1 a 9: elegir objeto del almacén\n" +
+            "Clic izquierdo: colocar    Clic derecho: guardar en el almacén\n" +
             "Casillas tenues: alcance del objeto. Amarillo: hay otro objeto dentro, habrá efecto.\n" +
             "Cifras sobre los objetos: valor (arriba) y peligro (abajo).\n" +
             "Peligro alto: los clientes miedosos se van y de noche los objetos se inquietan.\n" +

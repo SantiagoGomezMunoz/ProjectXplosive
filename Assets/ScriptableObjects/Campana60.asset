@@ -14,7 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tienda.Core::ConfiguracionPartida
   modo: 0
   dineroInicial: 100
-  actos: []
+  almacenInicial:
+  - objeto: {fileID: 11400000, guid: ca91d99493409784ab06ffcec72789d9, type: 2}
+    cantidad: 2
+  - objeto: {fileID: 11400000, guid: 51d56dd93c31d8842a7cbe3b440e1a83, type: 2}
+    cantidad: 2
+  - objeto: {fileID: 11400000, guid: 66cc027fc181af54ea913bfaaddc4b36, type: 2}
+    cantidad: 2
+  suministroDiarioProvisional: 2
+  actos:
+  - nombre: Aprender el oficio
+    dias: 15
+    alquilerDiario: 20
+    cuotaFinal: 1200
+  - nombre: Nuevo aires
+    dias: 15
+    alquilerDiario: 30
+    cuotaFinal: 1500
+  - nombre: El misterio
+    dias: 15
+    alquilerDiario: 40
+    cuotaFinal: 1800
+  - nombre: El desenlace
+    dias: 15
+    alquilerDiario: 50
+    cuotaFinal: 1500
   alquilerInicialInfinito: 20
   diasPorSubidaInfinito: 10
   subidaAlquilerInfinito: 5
