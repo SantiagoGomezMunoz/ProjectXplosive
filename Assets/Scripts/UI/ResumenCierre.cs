@@ -84,6 +84,7 @@ public class ResumenCierre : MonoBehaviour
         sb.AppendLine($"Ventas: {tienda.VentasDia} (ingresos {tienda.IngresosDia})");
         sb.AppendLine($"Clientes asustados: {tienda.SustosDia}");
         sb.AppendLine($"Noche: {tienda.CalmadosNoche} calmados, {tienda.DescontroladosNoche} sin calmar");
+        sb.AppendLine($"Subasta: {tienda.LotesGanadosDia} lotes ganados (gasto {tienda.GastoSubastaDia})");
         sb.AppendLine($"Peligro de la tienda: {colocador.PeligroActual}");
         sb.AppendLine(r.alquilerPagado
             ? $"Alquiler: -{r.alquiler}"

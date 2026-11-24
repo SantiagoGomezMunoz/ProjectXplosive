@@ -119,6 +119,62 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &108018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 108020}
+  - component: {fileID: 108019}
+  m_Layer: 0
+  m_Name: SubastaNocturna
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &108019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15ccf1a9a540834a8511fe509935769, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubastaNocturna
+  gestorDia: {fileID: 853912725}
+  partida: {fileID: 1778756488}
+  catalogo: {fileID: 11400000, guid: 1d754217e83b7754c8b903aeb9c6217b, type: 2}
+  tienda: {fileID: 2018878515}
+  colocador: {fileID: 1216763243}
+  rivales:
+  - {fileID: 11400000, guid: 34d9e053551b2bf48baa08520a87721e, type: 2}
+  - {fileID: 11400000, guid: ec2b39660d1faba4ca505abb449cb80f, type: 2}
+  - {fileID: 11400000, guid: 1434c6ec422b93f4b9fe38176708fc03, type: 2}
+  segundosPrimeraRonda: 15
+  segundosPorRonda: 8
+  segundosResultado: 5
+--- !u!4 &108020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108018}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.04195, y: 1.50501, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &291723525
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,6 +615,7 @@ MonoBehaviour:
   duracionManana: 60
   duracionTarde: 90
   duracionNoche: 60
+  duracionSubasta: 150
   luzGlobal: {fileID: 619394801}
   velocidadTransicion: 2
 --- !u!4 &853912726
@@ -1955,55 +2012,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1728593162
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1728593164}
-  - component: {fileID: 1728593163}
-  m_Layer: 0
-  m_Name: SuministroProvisional
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1728593163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1728593162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487f4675c30be84b99f2873d3ad50fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SuministroProvisional
-  gestorDia: {fileID: 853912725}
-  partida: {fileID: 1778756488}
-  catalogo: {fileID: 11400000, guid: 1d754217e83b7754c8b903aeb9c6217b, type: 2}
-  tienda: {fileID: 2018878515}
-  desdeElDia: 2
---- !u!4 &1728593164
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1728593162}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.14693, y: 1.28875, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1778756487
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,4 +2317,4 @@ SceneRoots:
   - {fileID: 585884895}
   - {fileID: 1778756489}
   - {fileID: 1417579799}
-  - {fileID: 1728593164}
+  - {fileID: 108020}

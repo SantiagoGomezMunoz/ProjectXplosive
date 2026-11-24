@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
-public enum FaseDia { Manana, Tarde, Noche, Cierre }
+public enum FaseDia { Manana, Tarde, Noche, Subasta, Cierre }
 
 public class GestorDia : MonoBehaviour
 {
@@ -14,15 +14,16 @@ public class GestorDia : MonoBehaviour
     [SerializeField] private float duracionManana = 60f;
     [SerializeField] private float duracionTarde = 90f;
     [SerializeField] private float duracionNoche = 60f;
+    [SerializeField] private float duracionSubasta = 150f; // límite de seguridad; la subasta termina antes
 
     [Header("Ambiente")]
     [SerializeField] private Light2D luzGlobal;
     [SerializeField] private float velocidadTransicion = 2f;
 
     public FaseDia FaseActual { get; private set; } = FaseDia.Manana;
-    public float DuracionTarde => duracionTarde;
     public int Dia => partida.Estado.dia;
     public float TiempoRestante { get; private set; }
+    public float DuracionTarde => duracionTarde;
     public event Action<FaseDia> FaseCambiada;
 
     private Color colorObjetivo = Color.white;
@@ -38,6 +39,13 @@ public class GestorDia : MonoBehaviour
     }
 
     public void Parpadear(float duracion = 0.35f) => parpadeoRestante = duracion;
+
+    // Pasa a la fase siguiente (la usa la subasta al terminar su último lote)
+    public void FinalizarFase()
+    {
+        if (FaseActual == FaseDia.Cierre) return;
+        IniciarFase(Siguiente(FaseActual));
+    }
 
     private void Update()
     {
@@ -84,10 +92,11 @@ public class GestorDia : MonoBehaviour
 
         switch (fase)
         {
-            case FaseDia.Manana: colorObjetivo = new Color(1f, 0.95f, 0.8f);   intensidadObjetivo = 1f;   break;
-            case FaseDia.Tarde:  colorObjetivo = new Color(1f, 0.7f, 0.45f);   intensidadObjetivo = 0.9f; break;
-            case FaseDia.Noche:  colorObjetivo = new Color(0.25f, 0.3f, 0.6f); intensidadObjetivo = 0.6f; break;
-            case FaseDia.Cierre: colorObjetivo = new Color(0.6f, 0.6f, 0.75f); intensidadObjetivo = 0.8f; break;
+            case FaseDia.Manana:  colorObjetivo = new Color(1f, 0.95f, 0.8f);    intensidadObjetivo = 1f;    break;
+            case FaseDia.Tarde:   colorObjetivo = new Color(1f, 0.7f, 0.45f);    intensidadObjetivo = 0.9f;  break;
+            case FaseDia.Noche:   colorObjetivo = new Color(0.25f, 0.3f, 0.6f);  intensidadObjetivo = 0.6f;  break;
+            case FaseDia.Subasta: colorObjetivo = new Color(0.3f, 0.28f, 0.5f);  intensidadObjetivo = 0.65f; break;
+            case FaseDia.Cierre:  colorObjetivo = new Color(0.6f, 0.6f, 0.75f);  intensidadObjetivo = 0.8f;  break;
         }
 
         FaseCambiada?.Invoke(fase);
@@ -98,6 +107,7 @@ public class GestorDia : MonoBehaviour
         FaseDia.Manana => duracionManana,
         FaseDia.Tarde => duracionTarde,
         FaseDia.Noche => duracionNoche,
+        FaseDia.Subasta => duracionSubasta,
         _ => 0f
     };
 
@@ -105,6 +115,7 @@ public class GestorDia : MonoBehaviour
     {
         FaseDia.Manana => FaseDia.Tarde,
         FaseDia.Tarde => FaseDia.Noche,
+        FaseDia.Noche => FaseDia.Subasta,
         _ => FaseDia.Cierre
     };
 
@@ -121,7 +132,8 @@ public class GestorDia : MonoBehaviour
         {
             FaseDia.Manana => "Mañana",
             FaseDia.Tarde => "Tarde",
-            FaseDia.Noche => "Noche",
+            FaseDia.Noche => "Vigilia",
+            FaseDia.Subasta => "Subasta",
             _ => "Cierre"
         };
 
@@ -131,6 +143,8 @@ public class GestorDia : MonoBehaviour
             texto = $"Día {Dia} - Fin de la partida\nPulsa R para empezar de nuevo";
         else if (cierre)
             texto = $"Día {Dia} - Cierre\nPulsa ESPACIO para empezar el día {Dia + 1}";
+        else if (FaseActual == FaseDia.Subasta)
+            texto = $"Día {Dia} - {nombre}";
         else
             texto = $"Día {Dia} - {nombre}  {Mathf.CeilToInt(TiempoRestante)} s";
 

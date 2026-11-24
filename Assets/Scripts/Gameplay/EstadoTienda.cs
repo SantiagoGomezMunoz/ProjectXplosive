@@ -17,6 +17,8 @@ public class EstadoTienda : MonoBehaviour
     // Contadores del día (para el resumen del cierre)
     public int VentasDia { get; private set; }
     public int IngresosDia { get; private set; }
+    public int LotesGanadosDia { get; private set; }
+    public int GastoSubastaDia { get; private set; }
     public int SustosDia { get; private set; }
     public int CalmadosNoche { get; private set; }
     public int DescontroladosNoche { get; private set; }
@@ -45,6 +47,8 @@ public class EstadoTienda : MonoBehaviour
         SustosDia = 0;
         CalmadosNoche = 0;
         DescontroladosNoche = 0;
+        LotesGanadosDia = 0;
+        GastoSubastaDia = 0;
         ReputacionInicioDia = Reputacion;
     }
 
@@ -61,6 +65,13 @@ public class EstadoTienda : MonoBehaviour
         VentasDia++;
         IngresosDia += monto;
         Mensaje($"{cliente} compró {objeto} por {monto}.");
+    }
+
+    public void RegistrarCompra(int monto)
+    {
+        partida.Estado.dinero -= monto;
+        LotesGanadosDia++;
+        GastoSubastaDia += monto;
     }
 
     public void RegistrarSusto(string cliente)
