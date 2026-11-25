@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1b098a1cd43584685a2158598cbe64, type: 3}
+  m_Name: Acto1Prueba
+  m_EditorClassIdentifier: Tienda.Core::ConfiguracionPartida
+  modo: 0
+  dineroInicial: 100
+  almacenInicial:
+  - objeto: {fileID: 11400000, guid: 51d56dd93c31d8842a7cbe3b440e1a83, type: 2}
+    cantidad: 2
+  - objeto: {fileID: 11400000, guid: 66cc027fc181af54ea913bfaaddc4b36, type: 2}
+    cantidad: 2
+  - objeto: {fileID: 11400000, guid: 16dad6b18f55f8c428c07b5cd6c55075, type: 2}
+    cantidad: 2
+  suministroDiarioProvisional: 2
+  actos:
+  - nombre: Acto 1
+    dias: 15
+    alquilerDiario: 20
+    cuotaFinal: 1200
+  alquilerInicialInfinito: 20
+  diasPorSubidaInfinito: 10
+  subidaAlquilerInfinito: 5
+  tramosReputacion:
+  - nombre: Baja
+    desde: -9999
+    clientesPorTarde: 4
+    lotesExtra: 0
+    pistasPeores: 1
+  - nombre: Media
+    desde: 0
+    clientesPorTarde: 6
+    lotesExtra: 0
+    pistasPeores: 0
+  - nombre: Alta
+    desde: 6
+    clientesPorTarde: 8
+    lotesExtra: 1
+    pistasPeores: 0
+  lotesPorNoche: 3
+  factorPrecioSalida: 0.6
+  incrementoPuja: 5

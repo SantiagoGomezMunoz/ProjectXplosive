@@ -92,4 +92,24 @@ public class ResolvedorTiendaTests
         Assert.IsFalse(grid.EstaLibre(new Vector2Int(0, 0)));
         Assert.IsTrue(grid.EsTransitable(new Vector2Int(0, 0)));
     }
+
+    [Test]
+    public void ReglaEntreLaMismaEtiqueta_SeAplicaUnaSolaVez()
+    {
+        tabla.reglas.Add(new ReglaInteraccion
+        {
+            etiquetaA = Etiqueta.Fuego, etiquetaB = Etiqueta.Fuego,
+            modificadorValor = 0.2f, deltaPeligro = 1
+        });
+
+        var grid = new GridTienda(5, 5);
+        grid.Colocar(Crear(Etiqueta.Fuego, 10, 1), new Vector2Int(1, 1), out ObjetoColocado a);
+        grid.Colocar(Crear(Etiqueta.Fuego, 10, 1), new Vector2Int(2, 1), out _);
+
+        ResultadoTienda r = ResolvedorTienda.Resolver(grid, tabla);
+
+        Assert.AreEqual(1, r.efectos.Count);
+        Assert.AreEqual(12, r.PrecioFinal(a));   // 10 * 1.2
+        Assert.AreEqual(3, r.peligroTotal);      // 1 + 1 + 1
+    }
 }

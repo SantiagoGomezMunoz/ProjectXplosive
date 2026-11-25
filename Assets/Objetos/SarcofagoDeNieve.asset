@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a703e1895141054b92468796e4a267a, type: 3}
+  m_Name: SarcofagoDeNieve
+  m_EditorClassIdentifier: Tienda.Core::ObjetoMalditoData
+  nombre: "Sarc\xF3fago de Nieve"
+  sprite: {fileID: -7538027528517917104, guid: 880006c4425a9e940939cb4ad9360b55, type: 3}
+  precioBase: 38
+  peligro: 2
+  etiquetas: 01000000
+  aura:
+  - {x: 0, y: 1}
+  - {x: 0, y: -1}
+  - {x: -1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 1}
+  - {x: 1, y: -1}
+  - {x: -1, y: 1}
+  - {x: -1, y: -1}
+  descripcion: Algo duerme dentro. Mejor que siga durmiendo.

@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjetoMalditoData
   nombre: Cuchara Maldita
   sprite: {fileID: -533592479324066679, guid: bb8bb95f9db7b88429ba82ce43014e54, type: 3}
-  precioBase: 30
+  precioBase: 20
   peligro: 2
   etiquetas: 03000000
   aura:
   - {x: 1, y: 0}
   - {x: 2, y: 0}
-  descripcion: "Siempre tiene hambre. Nunca se sabe de qu\xE9."
+  descripcion: 'Se come todo.
+
+'

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: feba486fff0efa041805674c5372220c
+guid: c4088a9415f5e324fa2cc890b7e3636c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5068204840465784426
-    second: AnillosDeOroFundido(5)_0
+      213: -6021424649034113317
+    second: PlatoVacio(10)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AnillosDeOroFundido(5)_0
+      name: PlatoVacio(10)_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 3
-        width: 28
-        height: 26
+        x: 5
+        y: 5
+        width: 22
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a6ed0ec2371e55640800000000000000
-      internalID: 5068204840465784426
+      spriteID: bde5a804f2a9f6ca0800000000000000
+      internalID: -6021424649034113317
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AnillosDeOroFundido(5)_0: 5068204840465784426
+      PlatoVacio(10)_0: -6021424649034113317
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

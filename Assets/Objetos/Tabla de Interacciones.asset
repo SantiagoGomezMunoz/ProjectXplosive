@@ -28,3 +28,18 @@ MonoBehaviour:
     modificadorValor: 0.15
     deltaPeligro: 0
     mensaje: La cuchara se congela con la boca abierta.
+  - etiquetaA: 0
+    etiquetaB: 0
+    modificadorValor: 0.2
+    deltaPeligro: 1
+    mensaje: "Las llamas de avivan entre s\xED."
+  - etiquetaA: 1
+    etiquetaB: 1
+    modificadorValor: 0.1
+    deltaPeligro: 0
+    mensaje: "Un fr\xEDo elegante: a los coleccionistas les encanta."
+  - etiquetaA: 3
+    etiquetaB: 3
+    modificadorValor: 0.3
+    deltaPeligro: 2
+    mensaje: Se disputan lo poco que hay.

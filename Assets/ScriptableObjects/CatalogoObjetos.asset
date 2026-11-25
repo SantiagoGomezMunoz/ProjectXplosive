@@ -13,8 +13,15 @@ MonoBehaviour:
   m_Name: CatalogoObjetos
   m_EditorClassIdentifier: Tienda.Core::CatalogoObjetos
   objetos:
-  - {fileID: 11400000, guid: ca91d99493409784ab06ffcec72789d9, type: 2}
+  - {fileID: 11400000, guid: 16dad6b18f55f8c428c07b5cd6c55075, type: 2}
   - {fileID: 11400000, guid: 51d56dd93c31d8842a7cbe3b440e1a83, type: 2}
   - {fileID: 11400000, guid: 66cc027fc181af54ea913bfaaddc4b36, type: 2}
-  - {fileID: 11400000, guid: 6656c20f307f96e47864fb6903f95472, type: 2}
-  - {fileID: 11400000, guid: 6a8e04ef53ab2e6459a7859231e0328a, type: 2}
+  - {fileID: 11400000, guid: d13965c0e8fe1bb4a9287a0df9bab397, type: 2}
+  - {fileID: 11400000, guid: 303e43dcd62d14245a087bc79e92d192, type: 2}
+  - {fileID: 11400000, guid: 251a6fc728794464696636b6d83b5e1e, type: 2}
+  - {fileID: 11400000, guid: 0b9e67e16601c364ba6a20f5f6ce833c, type: 2}
+  - {fileID: 11400000, guid: 6eaed09b1e81efe408dccde14d30aded, type: 2}
+  - {fileID: 11400000, guid: 7940d0661ba79d64c8d858010ca45402, type: 2}
+  - {fileID: 11400000, guid: ce4cfbd978659a74a9f7b0a736520f98, type: 2}
+  - {fileID: 11400000, guid: 9aec1cda08646ed43a7e7d2fd41ac06a, type: 2}
+  - {fileID: 11400000, guid: 18b0a7264c69f60478a874dc42975707, type: 2}

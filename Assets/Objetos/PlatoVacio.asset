@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a703e1895141054b92468796e4a267a, type: 3}
-  m_Name: Lampara Cavernosa
-  m_EditorClassIdentifier: Assembly-CSharp::ObjetoMalditoData
-  nombre: "L\xE1mpara Cavernosa"
-  sprite: {fileID: -9165061949355916219, guid: b30c322065e078d4d934495281835b5a, type: 3}
-  precioBase: 15
+  m_Name: PlatoVacio
+  m_EditorClassIdentifier: Tienda.Core::ObjetoMalditoData
+  nombre: "Plato Vac\xEDo"
+  sprite: {fileID: -6021424649034113317, guid: c4088a9415f5e324fa2cc890b7e3636c, type: 3}
+  precioBase: 22
   peligro: 2
-  etiquetas: 00000000
+  etiquetas: 03000000
   aura:
-  - {x: 0, y: 0}
-  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: -1}
   - {x: -1, y: 0}
   - {x: 1, y: 0}
-  descripcion: "Ilumina los rincones m\xE1s oscuros... Mientras se r\xEDe de tu cara."
+  descripcion: "Nunca se llena. Nadie sabe qu\xE9 espera."

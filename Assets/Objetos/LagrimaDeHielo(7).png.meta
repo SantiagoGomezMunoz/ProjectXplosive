@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b30c322065e078d4d934495281835b5a
+guid: c7d6f13f0114c654fbab66d955ac85ca
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9165061949355916219
-    second: LamparaCavernosa_0
+      213: 5218565779013278352
+    second: LagrimaDeHielo(7)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LamparaCavernosa_0
+      name: LagrimaDeHielo(7)_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 0
-        width: 26
-        height: 32
+        x: 9
+        y: 5
+        width: 14
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 544013437b82fc080800000000000000
-      internalID: -9165061949355916219
+      spriteID: 09a98174de11c6840800000000000000
+      internalID: 5218565779013278352
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LamparaCavernosa_0: -9165061949355916219
+      LagrimaDeHielo(7)_0: 5218565779013278352
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

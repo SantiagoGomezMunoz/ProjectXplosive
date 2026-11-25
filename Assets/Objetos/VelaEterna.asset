@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a703e1895141054b92468796e4a267a, type: 3}
+  m_Name: VelaEterna
+  m_EditorClassIdentifier: Tienda.Core::ObjetoMalditoData
+  nombre: Vela Eterna
+  sprite: {fileID: -2629660085607232380, guid: 41f4aaafdb492a34ab7372622f9fcff2, type: 3}
+  precioBase: 14
+  peligro: 1
+  etiquetas: 00000000
+  aura:
+  - {x: 1, y: 1}
+  - {x: 1, y: -1}
+  - {x: -1, y: 1}
+  - {x: -1, y: -1}
+  descripcion: Nunca se consume. Tampoco se apaga.
